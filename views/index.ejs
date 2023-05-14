@@ -9,10 +9,10 @@
         <ul>
             <% messages.forEach(function(message) { %>
                 <li><%= message.user %></li>
-            <ul>
-                <li><%= message.text %></li>
-                <li><%= message.added %></li>
-            </ul>
+                <ul>
+                    <li><%= message.text %></li>
+                    <li>Message created <%= message.createdAt.toLocaleString() %></li>
+                </ul>
             <% }); %>
         </ul>
         <a href="/new">Create a new message</a>
