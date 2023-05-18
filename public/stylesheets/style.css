@@ -1,3 +1,7 @@
+h1 {
+    text-align: center;
+}
+
 ul {
     list-style-type: none;
     margin: 0;
@@ -5,11 +9,32 @@ ul {
 }
 
 .board {
-    height: 75vh;
-    width: 75%;
+    height: 85vh;
+    width: 85%;
     margin: 0 auto;
     border: 1px solid black;
     border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.board-header {
+    background-color: black;
+    color: white;
+    padding-bottom: 5px;
+    border-radius: 10px 10px 0 0;
+    padding-left: 10px;
+}
+
+.board-header span {
+    float: right;
+    padding-right: 10px;
+}
+
+.messages {
+    flex-grow: 1;
+    overflow-x: auto;
 }
 
 .message {
@@ -34,4 +59,22 @@ ul {
     background-color: aqua;
     border-radius: 5px;
     grid-column: 1 / -1;
+    word-wrap: break-word;
+}
+
+.board-footer {
+    background-color: black;
+    color: white;
+    text-align: center;
+    border-radius: 0 0 10px 10px;
+}
+
+h3 {
+    margin: 5px 0;
+}
+
+@media screen and (min-width: 1000px) { /* Desktop */
+    .board {
+        width: 50%;
+    }
 }

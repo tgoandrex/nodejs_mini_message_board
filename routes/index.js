@@ -6,16 +6,15 @@ const { Message } = require('../model/Message');
 /* GET home page. */
 router.get('/', async function(req, res, next) {
     const allMessages = await Message.find({});
+    const numberOfMessages = await Message.count({});
+    const latestMessage = await Message.findOne({}, '-_id createdAt', {sort: {createdAt: -1}});
 
     res.render('index', {
         title: 'Nodejs Mini Message Board',
-        messages: allMessages
+        messages: allMessages,
+        count: numberOfMessages,
+        latest: latestMessage.createdAt
     });
-});
-
-/* GET new message. */
-router.get('/new', function(req, res, next) {
-    res.render('form', { title: 'New Message' });
 });
 
 /* POST new message. */
