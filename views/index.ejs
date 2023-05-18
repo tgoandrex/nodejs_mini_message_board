@@ -6,13 +6,13 @@
     </head>
     <body>
         <p>Welcome to <%= title %></p>
-        <ul>
+        <ul class='board'>
             <% messages.forEach(function(message) { %>
-                <li><%= message.user %></li>
-                <ul>
-                    <li><%= message.text %></li>
-                    <li>Message created <%= message.createdAt.toLocaleString() %></li>
-                </ul>
+                <li class='message'>
+                    <div class='message-user'><%= message.user %></div>
+                    <div class='message-date'><%= message.createdAt.toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute:'2-digit'}) %></div>
+                    <div class='message-text'><%= message.text %></div>
+                </li>
             <% }); %>
         </ul>
         <a href="/new">Create a new message</a>

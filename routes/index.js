@@ -27,7 +27,7 @@ router.post('/new', function(req, res, next) {
 
     try {
         message.save();
-        res.redirect("/");
+        res.redirect('/');
     } catch(e) {
         console.error(e);
     }

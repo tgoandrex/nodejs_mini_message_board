@@ -1,3 +1,37 @@
 ul {
     list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.board {
+    height: 75vh;
+    width: 75%;
+    margin: 0 auto;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.message {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: auto;
+    padding: 10px;
+}
+
+.message-user {
+    font-weight: bold;
+}
+
+.message-date {
+    text-align: end;
+}
+
+.message-text {
+    width: fit-content;
+    padding: 2px;
+    margin-top: 5px;
+    background-color: aqua;
+    border-radius: 5px;
+    grid-column: 1 / -1;
 }
