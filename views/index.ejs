@@ -24,12 +24,14 @@
             </ul>
             <div class='board-footer'>
                 <form method="POST" action="/new">
-                    <h3>New Message</h3>
-                    <input type="text" name="user" placeholder="Author" maxlength="15" />
-                    <input type="text" name="text" placeholder="Message" maxlength="250" />
-                    <button type="submit">Submit</button>
+                    <div class='input-group'>
+                        <input type="text" name="user" placeholder="Author" maxlength="15" required />
+                        <input type="text" name="text" placeholder="Message" maxlength="250" required />
+                    </div>
+                    <button type="submit"><i class="fa-solid fa-paper-plane fa-2xl"></i></button>
                 </form>
             </div>
         </div>
+        <script src="https://kit.fontawesome.com/a0cabf7a73.js" crossorigin="anonymous"></script>
     </body>
 </html>
