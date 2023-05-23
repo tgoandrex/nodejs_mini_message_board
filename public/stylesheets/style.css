@@ -10,20 +10,22 @@ ul {
 
 form {
     display: flex;
+    height: 100%;
 }
 
 input[type='text'] {
-    height: 1.5rem;
     border: none;
     outline: none;
     border-radius: 10px;
+    height: 50%;
+    font-size: 1.2rem;
 }
 
 button {
     background-color: white;
     border: none;
     border-radius: 10px;
-    padding: 10px;
+    padding: 0 20px;
 }
 
 .board {
@@ -38,22 +40,28 @@ button {
 }
 
 .board-header {
+    height: 5vh;
     background-color: black;
     color: white;
-    padding-bottom: 5px;
     border-radius: 10px 10px 0 0;
-    padding-left: 10px;
     font-size: 1.2rem;
 }
 
-.board-header span {
+.header-info {
+    margin-top: 10px;
+    padding-left: 10px;
+}
+
+.header-info span {
     float: right;
     padding-right: 10px;
 }
 
 .messages {
+    height: 70vh;
     flex-grow: 1;
     overflow-x: auto;
+    font-size: 1.2rem;
 }
 
 .message {
@@ -82,7 +90,7 @@ button {
 }
 
 .board-footer {
-    text-align: center;
+    height: 10vh;
     border-radius: 0 0 10px 10px;
     font-size: 1.2rem;
 }

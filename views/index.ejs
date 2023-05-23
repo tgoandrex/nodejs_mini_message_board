@@ -8,10 +8,16 @@
         <h1><%= title %></h1>
         <div class='board'>
             <div class='board-header'>
-                <%= count %> total messages
-                <span>
-                    Last message on <%= latest.toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric'}) %>
-                </span>
+                <div class='header-info'>
+                    <% if(count === 1) { %>
+                        <%= count %> message
+                    <% } else { %>
+                        <%= count %> messages
+                    <% } %>
+                    <span>
+                        Last message: <%= latest.toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric'}) %>
+                    </span>
+                </div>
             </div>
             <ul class='messages'>
                 <% messages.forEach(function(message) { %>
