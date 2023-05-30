@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <%- include('partials/head.ejs') %>
+    <body>
+        <h1><%= title %></h1>
+        <form method="POST" action="/auth/register">
+            <div class='input-group'>
+                <label for="username">Username</label>
+                <input type="text" name="username" maxlength="15" required />
+                <label for="password">Password</label>
+                <input type="password" name="password" required />
+            </div>
+            <button type="submit">Register</button>
+        </form>
+    </body>
+</html>

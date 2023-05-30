@@ -4,36 +4,46 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const session = require('express-session');
+const passport = require('passport');
+
 
 const app = express();
 
 const connectionString = process.env.ATLAS_URI;
 const port = process.env.PORT;
 
-const indexRouter = require('./routes/index');
+// Require routes
+const indexRoute = require('./routes/index');
+const authRoute = require('./routes/auth');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-
-app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(bodyParser.urlencoded({
     extended: true
 }))
 app.use(bodyParser.json());
 
-app.use('/', indexRouter);
+app.use(express.static(path.join(__dirname, 'public')));
 
-const start = async () => {
-    try {
-        mongoose.set('strictQuery', false);
-        await mongoose.connect(connectionString);
-        app.listen(port, () => console.log(`Nodejs Mini Message Board listening on port ${port}`));
-    } catch(e) {
-        console.error(e);
-        process.exit(1);
-    }
-};
+// Setup session
+app.use(session({secret: process.env.SECRET, resave: false, saveUninitialized: false}));
 
-start();
+// Init Passport
+app.use(passport.initialize());
+
+// Use Passport to deal with session
+app.use(passport.session())
+
+// Connect to database
+mongoose.connect(connectionString)
+.then(() => console.log("Database connected"))
+.catch((err) => console.log(err));
+
+// Use routes
+app.use('/', indexRoute, authRoute);
+
+// Start the server
+app.listen(port, () => console.log(`Nodejs Mini Message Board listening on port ${port}!`));
