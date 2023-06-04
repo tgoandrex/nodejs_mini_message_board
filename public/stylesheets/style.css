@@ -14,19 +14,8 @@ form {
     margin-right: 5px;
 }
 
-input[type='text'] {
-    border: none;
-    outline: none;
-    border-radius: 10px;
-    height: 50%;
-    font-size: 1.2rem;
-}
-
-button {
-    background-color: white;
-    border: none;
-    border-radius: 10px;
-    padding: 0 1.5rem;
+a:visited {
+    color: blue;
 }
 
 .board {
@@ -45,31 +34,26 @@ button {
     background-color: black;
     color: white;
     border-radius: 10px 10px 0 0;
-    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
 }
 
-.header-info {
-    margin-top: 1.5vh;
-    padding-left: 10px;
-}
-
-.header-info span {
-    float: right;
-    padding-right: 10px;
+.board-header span {
+    flex-grow: 1;
+    text-align: center;
 }
 
 .messages {
     height: 70vh;
     flex-grow: 1;
     overflow-x: auto;
-    font-size: 1.2rem;
 }
 
 .message {
     display: grid;
     grid-template-columns: 50% 50%;
     grid-template-rows: auto;
-    margin: 2vh 1vh;
+    margin: 0 0.5vh 1.5vh 0.5vh;
 }
 
 .message-user {
@@ -83,17 +67,20 @@ button {
 .message-text {
     width: fit-content;
     padding: 2px;
-    margin-top: 1vh;
     background-color: aqua;
     border-radius: 5px;
     grid-column: 1 / -1;
     word-wrap: break-word;
 }
 
+.edit-link {
+    text-align: center;
+    grid-column: 1 / -1;
+}
+
 .board-footer {
     height: 10vh;
     border-radius: 0 0 10px 10px;
-    font-size: 1.2rem;
 }
 
 .input-group {
@@ -103,8 +90,30 @@ button {
     flex-grow: 1;
 }
 
+.input-group input {
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    height: 50%;
+    font-size: 1.2rem;
+}
+
+.message-submit {
+    background-color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 0 1.5rem;
+}
+
+.login-register {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
 @media screen and (min-width: 1000px) { /* Desktop */
     .board {
+        font-size: 1.2rem;
         width: 50%;
     }
 }

@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+    <%- include('partials/head.ejs') %>
+    <body>
+        <h1><%= title %></h1>
+        <form method="POST" action="/edit/<%= message._id %>">
+            <input type="text" name="text" placeholder="New Message" maxlength="250" required />
+            <button type="submit"><i class="fa-solid fa-pencil"></i></button>
+        </form>
+        <script src="https://kit.fontawesome.com/a0cabf7a73.js" crossorigin="anonymous"></script>
+    </body>
+</html>

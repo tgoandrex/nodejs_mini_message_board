@@ -8,8 +8,8 @@ const User = require('../model/User');
 passport.use(User.createStrategy());
 
 // Serialize and deserialize user
-passport.serializeUser(function(user, cb) {
-    process.nextTick(function() {
+passport.serializeUser((user, cb) => {
+    process.nextTick(() => {
         return cb(null, {
             id: user.id,
             username: user.username,
@@ -17,8 +17,8 @@ passport.serializeUser(function(user, cb) {
         });
     });
 });
-passport.deserializeUser(function(user, cb) {
-    process.nextTick(function() {
+passport.deserializeUser((user, cb) => {
+    process.nextTick(() => {
         return cb(null, user);
     });
 });
@@ -41,26 +41,14 @@ router.post('/auth/register', async (req, res) => {
 });
 
 // Login user
-router.post('/auth/login', async (req, res) => {
-    const user = new User({
-        username: req.body.username,
-        password: req.body.password
-    });
-
-    req.login(user, (err) => {
-        if(err) {
-            console.log(err);
-        } else {
-            passport.authenticate('local')(req, res, () => {
-                res.redirect('/');
-            });
-        }
-    })
+router.post('/auth/login',passport.authenticate('local', { failureRedirect: '/login'}), (req, res) => {
+    res.redirect('/');
 });
+  
 
 // Logout user
 router.get('/auth/logout', (req, res) => {
-    req.logout(function(err) {
+    req.logout((err) => {
         if(err) {
             console.log(err);
         }

@@ -3,7 +3,11 @@ const passportLocalMongoose = require('passport-local-mongoose');
 
 const userSchema = new mongoose.Schema({
     username: String,
-    password: String
+    password: String,
+    messages: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Message'
+    }]
 });
 
 // Hash password using passport-local-mongoose plugin

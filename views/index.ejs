@@ -3,43 +3,56 @@
     <%- include('partials/head.ejs') %>
     <body>
         <h1><%= title %></h1>
-        <% if(authenticated) { %>
-            <p>Welcome <%= username %>!</p>
-            <a href="/auth/logout">Log Out</a>
-        <% } else { %>
-            <a href="/login">Log In</a>
-            <a href="/register">Register</a>
-        <% } %>
         <div class='board'>
             <div class='board-header'>
-                <div class='header-info'>
-                    <% if(count === 1) { %>
-                        <%= count %> message
-                    <% } else { %>
-                        <%= count %> messages
-                    <% } %>
+                <% if(hasMessages) { %>
                     <span>
-                        Last message: <%= latest.toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric'}) %>
+                        <% if(count === 1) { %>
+                            <%= count %> message
+                        <% } else { %>
+                            <%= count %> messages
+                        <% } %>
                     </span>
-                </div>
+                    <span>
+                        Last message: <%= latest.createdAt.toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric'}) %>
+                    </span>
+                <% } %>
             </div>
             <ul class='messages'>
-                <% messages.forEach(function(message) { %>
-                    <li class='message'>
-                        <div class='message-user'><%= message.user %></div>
-                        <div class='message-date'><%= message.createdAt.toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute:'2-digit'}) %></div>
-                        <div class='message-text'><%= message.text %></div>
-                    </li>
-                <% }); %>
+                <% if(hasMessages) { %>
+                    <% messages.forEach(function(message) { %>
+                        <li class='message'>
+                            <div class='message-user'><%= message.username %></div>
+                            <div class='message-date'>
+                                <% if(message.updatedAt > message.createdAt) { %>
+                                    Edited <%= message.updatedAt.toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute:'2-digit'}) %>
+                                <% } else { %>
+                                    <%= message.createdAt.toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute:'2-digit'}) %>
+                                <% } %>
+                            </div>
+                            <div class='message-text'><%= message.text %></div>
+                            <% if(message.username === username) {%>
+                                <span class='edit-link'><a href='/edit/<%= message._id %>'>Edit Message</a></span>
+                            <% } %>
+                        </li>
+                    <% }); %>
+                <% } %>
             </ul>
             <div class='board-footer'>
-                <form method="POST" action="/new">
-                    <div class='input-group'>
-                        <input type="text" name="user" placeholder="Author" maxlength="15" required />
-                        <input type="text" name="text" placeholder="Message" maxlength="250" required />
+                <% if(authenticated) { %>
+                    <form method="POST" action="/message">
+                        <div class='input-group'>
+                            <span>Posting as <%= username %> <a href="/auth/logout">Log Out</a></span>
+                            <input type="text" name="text" placeholder="Message" maxlength="250" required />
+                        </div>
+                        <button type="submit" class='message-submit'><i class="fa-solid fa-paper-plane fa-2xl"></i></button>
+                    </form>
+                <% } else { %>
+                    <div class='login-register'>
+                        <span>You must <a href="/login">log in</a> to post a message</span>
+                        <span>No account? <a href="/register">Register</a></span>
                     </div>
-                    <button type="submit"><i class="fa-solid fa-paper-plane fa-2xl"></i></button>
-                </form>
+                <% } %>
             </div>
         </div>
         <script src="https://kit.fontawesome.com/a0cabf7a73.js" crossorigin="anonymous"></script>
