@@ -81,6 +81,24 @@ router.get('/edit/:id', async (req, res) => {
     })
 });
 
+/* GET delete message page. */
+router.get('/delete/:id', async (req, res) => {
+    Message.findById({_id: req.params.id}).then((message) => {
+        if(req.isAuthenticated()) {
+            if(message.username !== req.user.username) {
+                res.redirect('/');
+            } else {
+                res.render('delete', {
+                    title: 'Delete Message',
+                    message: message
+                });
+            }
+        } else {
+            res.redirect('/');
+        }
+    })
+});
+
 /* Submit new message. */
 router.post('/message', (req, res) => {
     Message.create({text: req.body.text, username: req.user.username}).then((message) => {
@@ -99,6 +117,21 @@ router.post('/edit/:id', (req, res) => {
     ).catch((err) => {
         console.log(err);
     });
+});
+
+/* Delete message. */
+router.post('/delete/:id', (req, res) => {
+    if(req.body.text === 'YES') {
+        Message.findByIdAndDelete(req.params.id).then((message) =>
+            User.findOneAndUpdate({username: message.username}, {$pull: {messages: message._id}}).then(
+                res.redirect('/')
+            )
+        ).catch((err) => {
+            console.log(err);
+        });
+    } else {
+        res.redirect('/');
+    }
 });
 
 module.exports = router;

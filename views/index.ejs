@@ -32,7 +32,10 @@
                             </div>
                             <div class='message-text'><%= message.text %></div>
                             <% if(message.username === username) {%>
-                                <span class='edit-link'><a href='/edit/<%= message._id %>'>Edit Message</a></span>
+                                <span class="edit-delete-links">
+                                    <a href='/edit/<%= message._id %>'>Edit Message</a>
+                                    <a href='/delete/<%= message._id %>'>Delete Message</a>
+                                </span>
                             <% } %>
                         </li>
                     <% }); %>
