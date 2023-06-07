@@ -41,7 +41,7 @@
             <div class='board-footer'>
                 <% if(authenticated) { %>
                     <form method="POST" action="/message">
-                        <div class='input-group'>
+                        <div class='input-wrap'>
                             <span>Posting as <%= username %> <a href="/auth/logout">Log Out</a></span>
                             <input type="text" name="text" placeholder="Message" maxlength="250" required />
                         </div>

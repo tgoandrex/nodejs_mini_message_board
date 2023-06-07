@@ -1,5 +1,6 @@
 h1 {
     text-align: center;
+    margin: 0;
 }
 
 ul {
@@ -51,7 +52,7 @@ a:visited {
 
 .message {
     display: grid;
-    grid-template-columns: 50% 50%;
+    grid-template-columns: 35% 65%;
     grid-template-rows: auto;
     margin: 0 0.5vh 1.5vh 0.5vh;
 }
@@ -83,22 +84,27 @@ a:visited {
     border-radius: 0 0 10px 10px;
 }
 
-.input-group {
+.input-wrap {
     margin-left: 5px;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
 }
 
-.input-group input {
+.input-wrap span {
+    height: 50%;
+    white-space: wrap;
+    overflow: hidden;
+}
+
+input {
     border: none;
     outline: none;
     border-radius: 10px;
-    height: 50%;
     font-size: 1.2rem;
 }
 
-.message-submit {
+button[type=submit] {
     background-color: white;
     border: none;
     border-radius: 10px;
@@ -112,6 +118,10 @@ a:visited {
 }
 
 @media screen and (min-width: 1000px) { /* Desktop */
+    h1 {
+        margin: 25px 0;
+    }
+    
     .board {
         font-size: 1.2rem;
         width: 50%;
