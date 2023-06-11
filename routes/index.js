@@ -48,6 +48,7 @@ router.get('/register', async (req, res) => {
     } else {
         res.render('register', {
             title: 'Register New Account',
+            error: false
         });
     }
 });
@@ -58,7 +59,7 @@ router.get('/login', async (req, res) => {
         homeRoute(req, res);
     } else {
         res.render('login', {
-            title: 'Log in',
+            title: 'Log in'
         });
     }
 });

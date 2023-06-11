@@ -25,23 +25,22 @@ passport.deserializeUser((user, cb) => {
 
 // Register user
 router.post('/auth/register', async (req, res) => {
-    try {
-        const userToRegister = await User.register({username: req.body.username}, req.body.password);
-
-        if(userToRegister) {
+    User.register({username: req.body.username}, req.body.password, (err) => {
+        if(err) {
+            res.render('register', {
+                title: 'Register New Account',
+                error: `Could not register. Error: ${err.message}`
+            });
+        } else {
             passport.authenticate('local')(req, res, () => {
                 res.redirect('/');
             });
-        } else {
-            res.redirect('/register');
         }
-    } catch(err) {
-        res.send(err);
-    }
+    });
 });
 
 // Login user
-router.post('/auth/login',passport.authenticate('local', { failureRedirect: '/login'}), (req, res) => {
+router.post('/auth/login', passport.authenticate('local', { failureRedirect: '/login'}), (req, res) => {
     res.redirect('/');
 });
   

@@ -3,7 +3,7 @@
     <%- include('partials/head.ejs') %>
     <body>
         <h1><%= title %></h1>
-        <form method="POST" action="/auth/login">
+        <form class="login-form" method="POST" action="/auth/login">
             <div class='input-wrap'>
                 <input type="text" name="username" placeholder="Username" maxlength="15" required />
                 <input type="password" name="password" placeholder="Password" required />

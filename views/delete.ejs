@@ -3,7 +3,7 @@
     <%- include('partials/head.ejs') %>
     <body>
         <h1><%= title %></h1>
-        <form method="POST" action="/delete/<%= message._id %>">
+        <form class="delete-form" method="POST" action="/delete/<%= message._id %>">
             <div class='input-wrap'>
                 <span>Message to delete: "<%= message.text %>"</span>
                 <input type="text" name="text" placeholder="Type 'YES' if you want to delete this message" required />

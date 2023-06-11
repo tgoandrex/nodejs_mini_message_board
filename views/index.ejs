@@ -18,11 +18,16 @@
                     </span>
                 <% } %>
             </div>
-            <ul class='messages'>
-                <% if(hasMessages) { %>
+            <% if(hasMessages) { %>
+                <ul class='messages'>
                     <% messages.forEach(function(message) { %>
                         <li class='message'>
-                            <div class='message-user'><%= message.username %></div>
+                            <div class='message-user'>
+                                <%= message.username %> 
+                                <% if(message.username === username) { %>
+                                    (You)
+                                <% } %>
+                            </div>
                             <div class='message-date'>
                                 <% if(message.updatedAt > message.createdAt) { %>
                                     Edited <%= message.updatedAt.toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute:'2-digit'}) %>
@@ -30,34 +35,38 @@
                                     <%= message.createdAt.toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute:'2-digit'}) %>
                                 <% } %>
                             </div>
-                            <div class='message-text'><%= message.text %></div>
                             <% if(message.username === username) {%>
-                                <span class="edit-delete-links">
+                                <div class='message-text' style='background-color: #FFFF00; color: black;'><%= message.text %></div>
+                                <span class='edit-delete-links'>
                                     <a href='/edit/<%= message._id %>'>Edit Message</a>
                                     <a href='/delete/<%= message._id %>'>Delete Message</a>
                                 </span>
+                            <% } else { %>
+                                <div class='message-text'><%= message.text %></div>
                             <% } %>
                         </li>
                     <% }); %>
-                <% } %>
-            </ul>
+                </ul>
+            <% } else { %>
+                <span style="text-align: center;">No messages yet. Create an account and make one!</span>
+            <% } %>
             <div class='board-footer'>
                 <% if(authenticated) { %>
-                    <form method="POST" action="/message">
+                    <form method='POST' action='/message'>
                         <div class='input-wrap'>
-                            <span>Posting as <%= username %> <a href="/auth/logout">Log Out</a></span>
-                            <input type="text" name="text" placeholder="Message" maxlength="250" required />
+                            <span>Posting as <%= username %> <a href='/auth/logout'>Log Out</a></span>
+                            <input type='text' name='text' placeholder='Message' maxlength='250' required />
                         </div>
-                        <button type="submit" class='message-submit'><i class="fa-solid fa-paper-plane fa-2xl"></i></button>
+                        <button type='submit' class='message-submit'><i class='fa-solid fa-paper-plane fa-2xl'></i></button>
                     </form>
                 <% } else { %>
                     <div class='login-register'>
-                        <span>You must <a href="/login">log in</a> to post a message</span>
-                        <span>No account? <a href="/register">Register</a></span>
+                        <span>You must <a href='/login'>log in</a> to post a message</span>
+                        <span>No account? <a href='/register'>Register</a></span>
                     </div>
                 <% } %>
             </div>
         </div>
-        <script src="https://kit.fontawesome.com/a0cabf7a73.js" crossorigin="anonymous"></script>
+        <script src='https://kit.fontawesome.com/a0cabf7a73.js' crossorigin='anonymous'></script>
     </body>
 </html>

@@ -3,7 +3,7 @@
     <%- include('partials/head.ejs') %>
     <body>
         <h1><%= title %></h1>
-        <form method="POST" action="/edit/<%= message._id %>">
+        <form class="edit-form" method="POST" action="/edit/<%= message._id %>">
             <div class='input-wrap'>
                 <span>Current message: "<%= message.text %>"</span>
                 <input type="text" name="text" placeholder="New Message" maxlength="250" required />
