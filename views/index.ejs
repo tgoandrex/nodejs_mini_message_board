@@ -3,68 +3,120 @@
     <%- include('partials/head.ejs') %>
     <body>
         <h1><%= title %></h1>
-        <div class='board'>
-            <div class='board-header'>
-                <% if(hasMessages) { %>
-                    <span>
-                        <% if(count === 1) { %>
-                            <%= count %> message
-                        <% } else { %>
-                            <%= count %> messages
-                        <% } %>
-                    </span>
-                    <span>
-                        Last message: <%= latest.createdAt.toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric'}) %>
-                    </span>
-                <% } %>
-            </div>
-            <% if(hasMessages) { %>
-                <ul class='messages'>
-                    <% messages.forEach(function(message) { %>
-                        <li class='message'>
-                            <div class='message-user'>
-                                <%= message.username %> 
-                                <% if(message.username === username) { %>
-                                    (You)
-                                <% } %>
-                            </div>
-                            <div class='message-date'>
-                                <% if(message.updatedAt > message.createdAt) { %>
-                                    Edited <%= message.updatedAt.toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute:'2-digit'}) %>
-                                <% } else { %>
-                                    <%= message.createdAt.toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute:'2-digit'}) %>
-                                <% } %>
-                            </div>
-                            <% if(message.username === username) {%>
-                                <div class='message-text' style='background-color: #FFFF00; color: black;'><%= message.text %></div>
-                                <span class='edit-delete-links'>
-                                    <a href='/edit/<%= message._id %>'>Edit Message</a>
-                                    <a href='/delete/<%= message._id %>'>Delete Message</a>
-                                </span>
+        <div class='main-container'>
+            <div class='board'>
+                <div class='board-header'>
+                    <% if(hasMessages) { %>
+                        <span>
+                            <% if(count === 1) { %>
+                                <%= count %> message
                             <% } else { %>
-                                <div class='message-text'><%= message.text %></div>
+                                <%= count %> messages
                             <% } %>
-                        </li>
-                    <% }); %>
-                </ul>
-            <% } else { %>
-                <span style="text-align: center;">No messages yet. Create an account and make one!</span>
-            <% } %>
-            <div class='board-footer'>
-                <% if(authenticated) { %>
-                    <form method='POST' action='/message'>
-                        <div class='input-wrap'>
-                            <span>Posting as <%= username %> <a href='/auth/logout'>Log Out</a></span>
-                            <input type='text' name='text' placeholder='Message' maxlength='250' required />
-                        </div>
-                        <button type='submit' class='message-submit'><i class='fa-solid fa-paper-plane fa-2xl'></i></button>
-                    </form>
+                        </span>
+                        <span>
+                            Last message: <%= latest.createdAt.toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric'}) %>
+                        </span>
+                    <% } %>
+                </div>
+                <% if(hasMessages) { %>
+                    <ul class='messages'>
+                        <% messages.forEach(function(message) { %>
+                            <li class='message'>
+                                <div class='message-user'>
+                                    <%= message.username %> 
+                                    <% if(message.username === username) { %>
+                                        (You)
+                                    <% } %>
+                                </div>
+                                <div class='message-date'>
+                                    <% if(message.updatedAt > message.createdAt) { %>
+                                        Edited <%= message.updatedAt.toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute:'2-digit'}) %>
+                                    <% } else { %>
+                                        <%= message.createdAt.toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute:'2-digit'}) %>
+                                    <% } %>
+                                </div>
+                                <% if(message.username === username) {%>
+                                    <div class='message-text message-text-active'><%= message.text %></div>
+                                    <span class='edit-delete-links'>
+                                        <a href='/edit/<%= message._id %>'>Edit Message</a>
+                                        <a href='/delete/<%= message._id %>'>Delete Message</a>
+                                    </span>
+                                <% } else { %>
+                                    <div class='message-text'><%= message.text %></div>
+                                <% } %>
+                            </li>
+                        <% }); %>
+                    </ul>
                 <% } else { %>
-                    <div class='login-register'>
-                        <span>You must <a href='/login'>log in</a> to post a message</span>
-                        <span>No account? <a href='/register'>Register</a></span>
-                    </div>
+                    <span style='text-align: center;'>No messages yet. Create an account and make one!</span>
                 <% } %>
+                <div class='board-footer'>
+                    <% if(authenticated) { %>
+                        <form class='message-form' method='POST' action='/message'>
+                            <div class='input-wrap'>
+                                <span>Posting as <%= username %> <a href='/auth/logout'>Log Out</a></span>
+                                <input type='text' name='text' placeholder='Message' maxlength='250' required />
+                                <input type='hidden' name='room' value='<%= roomTitle %>' />
+                            </div>
+                            <button type='submit' class='message-submit'><i class='fa-solid fa-paper-plane fa-2xl'></i></button>
+                        </form>
+                    <% } else { %>
+                        <div class='login-register'>
+                            <span>You must <a href='/login'>log in</a> to post a message</span>
+                            <span>No account? <a href='/register'>Register</a></span>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+            <div class='rooms'>
+                <div class='rooms-header'>
+                    <span>Rooms</span>
+                </div>
+                <div class='rooms-list'>
+                    <ul>
+                        <% rooms.forEach(function(room) { %>
+                            <li>
+                                <% if(room.hasPassword) { %>
+                                    <span><%= room.title %> <i class='fa-solid fa-lock'></i></span>
+                                    <% if(authenticated) { %>
+                                        <form method='POST' action="/room/<%= room._id %>">
+                                            <div class='input-wrap'>
+                                                <input 
+                                                    type='password' 
+                                                    name='password' 
+                                                    placeholder='Room Password' 
+                                                    required 
+                                                />
+                                                <input type='hidden' name='room' value='<%= roomTitle %>' />
+                                                <button type='submit' class='message-submit'><i class='fa-solid fa-unlock'></i></button>
+                                            </div>
+                                            
+                                        </form>
+                                    <% } %>
+                                <% } else { %>
+                                    <a href='/room/<%= room._id %>'><%= room.title %></a>
+                                <% } %>
+                            </li>
+                        <% }); %>
+                    </ul>
+                </div>
+                <div class='rooms-footer'>
+                    <% if(authenticated) { %>
+                        <form class='rooms-form' method='POST' action='/room'>
+                            <div class='input-wrap'>
+                                <input type='text' name='title' placeholder='Room Title' maxlength='30' required />
+                                <input type='password' name='password' placeholder='Password (optional)' />
+                                <button type='submit'>Create</button>
+                            </div>
+                        </form>
+                    <% } else { %>
+                        <div class='login-register'>
+                            <span>You must <a href='/login'>log in</a> to create a new room</span>
+                            <span>No account? <a href='/register'>Register</a></span>
+                        </div>
+                    <% } %>
+                </div>
             </div>
         </div>
         <script src='https://kit.fontawesome.com/a0cabf7a73.js' crossorigin='anonymous'></script>
