@@ -25,12 +25,4 @@ const roomSchema = new mongoose.Schema({
     }
 }, { timestamps: true });
 
-// Password validation for private rooms (only if password exists)
-roomSchema.pre('save', function(next) {
-    if (this.password && this.password.length < 6) {
-        return next(new Error('Password must be at least 6 characters long'));
-    }
-    next();
-});
-
 module.exports = mongoose.model('Room', roomSchema);
