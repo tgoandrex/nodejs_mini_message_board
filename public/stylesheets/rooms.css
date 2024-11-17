@@ -1,0 +1,48 @@
+.rooms {
+    height: 35vh;
+    width: 90%;
+    margin: 0 auto;
+    border: 1px solid black;
+    border-top: none;
+    border-radius: 10px;
+}
+
+.rooms-header {
+    height: 5vh;
+    background-color: black;
+    color: white;
+    border-radius: 10px 10px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.rooms-list {
+    height: 20vh;
+}
+
+.room {
+    margin: 0 0.5vh 1.5vh 0.5vh;
+}
+
+.room-title {
+    text-align: center;
+    display: block;
+}
+
+.rooms-footer {
+    height: 10vh;
+    border-radius: 0 0 10px 10px;
+}
+
+@media screen and (min-width: 1000px) { /* Desktop */
+    .rooms {
+        width: 15%;
+        height: 85vh;
+    }
+    
+    .rooms-list {
+        height: 70vh;
+        overflow-x: auto;
+    }
+}

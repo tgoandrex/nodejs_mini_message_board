@@ -4,7 +4,6 @@ const router = express.Router();
 
 const User = require('../model/User');
 
-// Register user
 router.post('/auth/register', async (req, res) => {
     User.register({ username: req.body.username }, req.body.password, (err) => {
         if (err) {
@@ -20,12 +19,10 @@ router.post('/auth/register', async (req, res) => {
     });
 });
 
-// Login user
 router.post('/auth/login', passport.authenticate('local', { failureRedirect: '/login' }), (req, res) => {
     res.redirect('/');
 });
 
-// Logout user
 router.get('/auth/logout', (req, res) => {
     req.logout((err) => {
         if (err) {

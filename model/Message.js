@@ -5,7 +5,7 @@ const messageSchema = new mongoose.Schema({
         type: String,
         required: true,
         minlength: 1,
-        maxlength: 500 // Limit the length of the message
+        maxlength: 250
     },
     room: {
         type: mongoose.Schema.Types.ObjectId,

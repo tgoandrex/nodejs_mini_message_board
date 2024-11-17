@@ -1,3 +1,4 @@
+const Message = require('../model/Message');
 const Room = require('../model/Room');
 const User = require('../model/User');
 
@@ -31,8 +32,29 @@ const createRoom = async (title, password, username) => {
     return room;
 }
 
-module.exports = {
-    getAllRooms,
-    getRoom,
-    createRoom
+const updateRoom = async (id, newTitle) => {
+    await Room.findByIdAndUpdate(id, { title: newTitle });
 };
+
+const deleteRoom = async (id, username) => {
+    const room = await Room.findById(id);
+    
+    if(!room) {
+        throw new Error('Room not found');
+    }
+
+    const messages = await Message.find({ room: id });
+    const messageIds = messages.map((message) => message._id);
+
+    await Message.deleteMany({ room: id });
+
+    await User.updateMany({ messages: { $in: messageIds } }, { $pull: { messages: { $in: messageIds } } });
+    
+    await Room.findByIdAndDelete(id);
+
+    const user = await User.findOne({ username });
+    user.rooms.pull(id);
+    await user.save();
+};
+
+module.exports = { getAllRooms, getRoom, createRoom, updateRoom, deleteRoom };

@@ -4,7 +4,8 @@ const roomSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        maxlength: 25
     },
     password: {
         type: String,

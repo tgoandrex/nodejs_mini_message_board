@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <%- include('../partials/head.ejs') %>
+    <body>
+        <h1><%= title %></h1>
+        <form class='edit-form' method='POST' action='/edit/room/<%= room._id %>'>
+            <div class='input-wrap'>
+                <span>Current room: '<%= room.title %>'</span>
+                <input type='text' name='title' placeholder='New Room Title' maxlength='25' required />
+            </div>
+            <button type='submit'><i class='fa-solid fa-pencil fa-2xl'></i></button>
+        </form>
+        <script src='https://kit.fontawesome.com/a0cabf7a73.js' crossorigin='anonymous'></script>
+    </body>
+</html>

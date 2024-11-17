@@ -1,0 +1,54 @@
+<div class='rooms'>
+    <div class='rooms-header'>
+        <span>Rooms</span>
+    </div>
+    <div class='rooms-list'>
+        <ul>
+            <% rooms.forEach(function(room) { %>
+                <li class='room'>
+                    <% if(room.hasPassword) { %>
+                        <span class='room-title'><%= room.title %> <i class='fa-solid fa-lock'></i></span>
+                        <% if(authenticated) { %>
+                            <form method='POST' action="/room/<%= room._id %>">
+                                <div class='input-wrap'>
+                                    <input 
+                                        type='password' 
+                                        name='password' 
+                                        placeholder='Room Password' 
+                                        required 
+                                    />
+                                    <input type='hidden' name='room' value='<%= roomTitle %>' />
+                                    <button type='submit' class='message-submit'><i class='fa-solid fa-unlock'></i></button>
+                                </div>
+                            </form>
+                        <% } %>
+                    <% } else { %>
+                        <a href='/room/<%= room._id %>' class='room-title'><%= room.title %></a>
+                    <% } %>
+                    <% if(room.username === username) {%>
+                        <span class='edit-delete-links'>
+                            <a href='/edit/room/<%= room._id %>'>Edit Room</a>
+                            <a href='/delete/room/<%= room._id %>'>Delete Room</a>
+                        </span>
+                    <% } %>
+                </li>
+            <% }); %>
+        </ul>
+    </div>
+    <div class='rooms-footer'>
+        <% if(authenticated) { %>
+            <form class='rooms-form' method='POST' action='/room'>
+                <div class='input-wrap'>
+                    <input type='text' name='title' placeholder='Room Title' maxlength='25' required />
+                    <input type='password' name='password' placeholder='Password (optional)' />
+                    <button type='submit'>Create</button>
+                </div>
+            </form>
+        <% } else { %>
+            <div class='login-register'>
+                <span>You must <a href='/login'>log in</a> to create a new room</span>
+                <span>No account? <a href='/register'>Register</a></span>
+            </div>
+        <% } %>
+    </div>
+</div>

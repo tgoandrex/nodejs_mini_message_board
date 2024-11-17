@@ -15,6 +15,8 @@ const port = process.env.PORT;
 
 // Require routes
 const indexRoute = require('./routes/index');
+const messageRoute = require('./routes/message');
+const roomRoute = require('./routes/room');
 const authRoute = require('./routes/auth');
 
 // view engine setup
@@ -46,7 +48,7 @@ mongoose.connect(connectionString)
 .catch((err) => console.log(err));
 
 // Use routes
-app.use('/', indexRoute, authRoute);
+app.use('/', indexRoute, messageRoute, roomRoute, authRoute);
 
 // Start the server
 app.listen(port, () => console.log(`Nodejs Mini Message Board listening on port ${port}!`));
