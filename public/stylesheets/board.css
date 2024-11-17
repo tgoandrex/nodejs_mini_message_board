@@ -27,7 +27,7 @@
 .messages {
     height: 70vh;
     flex-grow: 1;
-    overflow-x: auto;
+    overflow-y: scroll;
 }
 
 .message {

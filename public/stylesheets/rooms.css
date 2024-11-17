@@ -19,6 +19,7 @@
 
 .rooms-list {
     height: 20vh;
+    overflow-y: scroll;
 }
 
 .room {
@@ -43,6 +44,5 @@
     
     .rooms-list {
         height: 70vh;
-        overflow-x: auto;
     }
 }
